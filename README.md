@@ -70,6 +70,17 @@ The build emits a single bundle to `dist/cli.js`, which is what the `markdownv2`
   - `keep` — leave them as-is (the library's own default).
 - Telegram's MarkdownV2 has a fixed set of supported entities (bold, italic, underline, strikethrough, spoiler, inline code, code block, link, blockquote). Anything outside that set has to be escaped or removed.
 
+## Publishing (maintainers)
+
+Releases are published to npm via the `Publish to npm` GitHub Actions workflow (`.github/workflows/publish.yml`). The workflow runs on manual `workflow_dispatch` and on GitHub release creation. It requires an `NPM_TOKEN` repository secret with publish rights to `@drakulavich/markdownv2-cli`.
+
+To cut a release:
+
+1. Bump `version` in `package.json` and merge to `main`.
+2. Either create a GitHub release for the new tag, or trigger the workflow manually from the Actions tab.
+
+The workflow runs `bun install --frozen-lockfile`, `bun run typecheck`, `bun test`, `bun run build`, then `npm publish --access public`.
+
 ## License
 
 MIT
